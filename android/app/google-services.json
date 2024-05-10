@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "792140130290",
+    "project_id": "blooddochallenge-09052024",
+    "storage_bucket": "blooddochallenge-09052024.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:792140130290:android:1ee4ee021c12aff6e76d6b",
+        "android_client_info": {
+          "package_name": "com.example.blooddochallenge"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaFAZlV0AnROPz1bjj3GQvrPFlPEUuALo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
