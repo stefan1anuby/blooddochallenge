@@ -43,12 +43,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _entryField(String title, TextEditingController controller) {
+    bool isPassword = (title.toLowerCase() == "password");
     return TextField(
       controller: controller,
       decoration: InputDecoration(labelText: title),
-      obscureText: true,
-      enableSuggestions: false,
-      autocorrect: false,
+      obscureText: isPassword,
+      enableSuggestions: !isPassword,
+      autocorrect: !isPassword,
     );
   }
 
