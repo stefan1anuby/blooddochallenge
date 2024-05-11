@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Auth {
+class UserService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -20,12 +20,10 @@ class Auth {
         .createUserWithEmailAndPassword(email: email, password: password);
     User? user = userCredential.user;
     if (user != null) {
-      // Crează un document pentru noul utilizator în Firestore
-      await _firestore.collection('Utilizatori').doc(user.uid).set({
+      await _firestore.collection('Users').doc(user.uid).set({
         'email': user.email,
-        'puncte': 0, // Valoare inițială pentru puncte
-        'data_ultimei_donari': null,
-        'istoric_donari': [],
+        'points': 0,
+        'donation_history': [],
       });
     }
   }

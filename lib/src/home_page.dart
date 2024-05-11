@@ -1,5 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'user_service.dart'; // Make sure to import UserService
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -9,22 +10,33 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final User? user = FirebaseAuth.instance.currentUser;
-
-  Future<void> signOut() async {
-    await FirebaseAuth.instance.signOut();
-  }
+  final UserService _userService = UserService(); // Using UserService
 
   Widget _title() {
     return const Text('BloodDoChallenge');
   }
 
-  Widget _userUid() {
-    return Text(user?.email ?? 'User email');
+  Widget _userEmail() {
+    return StreamBuilder<User?>(
+      stream: _userService.authStateChanges,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          final User? user = snapshot.data;
+          return Text(user?.email ?? 'User email');
+        } else {
+          return const CircularProgressIndicator();
+        }
+      },
+    );
   }
 
   Widget _signOutButton() {
-    return ElevatedButton(onPressed: signOut, child: const Text('Sign Out'));
+    return ElevatedButton(
+      onPressed: () async {
+        await _userService.signOut();
+      },
+      child: const Text('Sign Out'),
+    );
   }
 
   int _selectedIndex = 0;
@@ -51,7 +63,9 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.exit_to_app),
-            onPressed: signOut,
+            onPressed: () async {
+              await _userService.signOut();
+            },
           ),
         ],
       ),
